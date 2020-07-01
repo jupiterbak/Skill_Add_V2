@@ -82,17 +82,17 @@ function post_initialize() {
 }
 server.initialize(post_initialize);
 
-// process.on('uncaughtException', function(err) {
-//     logger.info('Uncaught Exception:' + err.stack);
+process.on('uncaughtException', function(err) {
+    logger.info('Uncaught Exception:' + err.stack);
 
-//     process.exit(1);
-// });
+    process.exit(1);
+});
 
 // Stop the platform if the user request it
 process.on('SIGINT', function() {
     logger.info("Shuting down Server  ... ( press CTRL+C to stop)");
-    //internal_kill.stop();
-    //internal_kill.clear();
+    internal_kill.stop();
+    internal_kill.clear();
 
     server.shutdown();
     process.exit(0);
