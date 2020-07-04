@@ -86,40 +86,29 @@ class Skill {
         //     };
         //     callback(null, callMethodResult);
         // }else{
-            // Check Parameters
-            if(inputArguments[0].value && inputArguments[1].value){
-                const callMethodResult = {
-                    statusCode: opcua.StatusCodes.Good,
-                    outputArguments: [{
-                        dataType: opcua.DataType.Int16,
-                        value: 0x0 // Example of ErrorCode
-                    }]
-                };
-                // Save results
-                this.call_result = inputArguments[0].value + inputArguments[1].value;
-                
-                // return the method results
-                callback(null, callMethodResult);
+            // Check Parameters            
+            const callMethodResult = {
+                statusCode: opcua.StatusCodes.Good,
+                outputArguments: [{
+                    dataType: opcua.DataType.Int16,
+                    value: 0x0 // Example of ErrorCode
+                }]
+            };
+            // Save results
+            this.call_result = inputArguments[0].value + inputArguments[1].value;
+            
+            // return the method results
+            callback(null, callMethodResult);
 
-                setTimeout(() => {
-                    // Set the skill results 
-                    self.results_errorID_node.setValueFromSource({ dataType: opcua.DataType.Int16, value: 0 }, opcua.StatusCodes.Good, new Date());  
-                    self.results_valueOut_node.setValueFromSource({ dataType: opcua.DataType.Double, value: self.call_result }, opcua.StatusCodes.Good, new Date());
+            setTimeout(() => {
+                // Set the skill results 
+                self.results_errorID_node.setValueFromSource({ dataType: opcua.DataType.Int16, value: 0 }, opcua.StatusCodes.Good, new Date());  
+                self.results_valueOut_node.setValueFromSource({ dataType: opcua.DataType.Double, value: self.call_result }, opcua.StatusCodes.Good, new Date());
 
-                    // reset xRequestProvided
-                    self.xRequestProvided_node.setValueFromSource({ dataType: opcua.DataType.Boolean, value: false }, opcua.StatusCodes.Good, new Date());
-                    self.xResultAcknowledge_node.setValueFromSource({ dataType: opcua.DataType.Boolean, value: true }, opcua.StatusCodes.Good, new Date());     
-                }, 2000);
-            }else{
-                const callMethodResult = {
-                    statusCode: opcua.StatusCodes.Good,
-                    outputArguments: [{
-                        dataType: opcua.DataType.Int16,
-                        value: 0x8000 // Example of ErrorCode
-                    }]
-                };
-                callback(null, callMethodResult);
-            }
+                // reset xRequestProvided
+                self.xRequestProvided_node.setValueFromSource({ dataType: opcua.DataType.Boolean, value: false }, opcua.StatusCodes.Good, new Date());
+                self.xResultAcknowledge_node.setValueFromSource({ dataType: opcua.DataType.Boolean, value: true }, opcua.StatusCodes.Good, new Date());     
+            }, 2000);
         //}      
     }
 
